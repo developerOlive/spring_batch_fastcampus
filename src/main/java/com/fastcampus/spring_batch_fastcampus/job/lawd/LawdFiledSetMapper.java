@@ -18,7 +18,7 @@ public class LawdFiledSetMapper implements FieldSetMapper<Lawd> {
         Lawd lawd = new Lawd();
         lawd.setLawdCd(fieldSet.readString(LAWD_CD));
         lawd.setLawdDong(fieldSet.readString(LAWD_DONG));
-        lawd.setExist(fieldSet.readBoolean(EXIST, EXIST_TRUE));
+        lawd.setExist(fieldSet.readBoolean(EXIST, EXIST_TRUE)); // 첫번째 인자값("존재")와 같으면 true, 아니면 false가 세팅됨
 
         return lawd;
     }

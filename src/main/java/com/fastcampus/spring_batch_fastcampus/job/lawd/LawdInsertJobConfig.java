@@ -1,6 +1,7 @@
 package com.fastcampus.spring_batch_fastcampus.job.lawd;
 
 import com.fastcampus.spring_batch_fastcampus.core.entity.Lawd;
+import com.fastcampus.spring_batch_fastcampus.core.service.LawdService;
 import com.fastcampus.spring_batch_fastcampus.job.validator.FilePathParameterValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +20,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
-import java.util.List;
-
 import static com.fastcampus.spring_batch_fastcampus.job.lawd.LawdFiledSetMapper.*;
 
 @Configuration
@@ -29,6 +28,7 @@ import static com.fastcampus.spring_batch_fastcampus.job.lawd.LawdFiledSetMapper
 public class LawdInsertJobConfig {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
+    private final LawdService lawdService;
 
     @Bean
     public Job lawdInsertJob(Step lawdInsertStep) {
@@ -56,7 +56,7 @@ public class LawdInsertJobConfig {
         return new FlatFileItemReaderBuilder<Lawd>()
                 .name("lawdFileItemReader")
                 .delimited() // 구분자
-                .delimiter("\t") // 탭으로 구분
+                .delimiter("\t") // 각각의 필드를 탭으로 구분하겠다는 의미
                 .names(LAWD_CD, LAWD_DONG, EXIST) // 텍스트 파일의 각각의 필드를 객체의 필드와 맵핑할 때 사용하는 이름
                 .linesToSkip(1) // 텍스트 파일에서 첫번째 줄은 제외 (제목이기 때문)
                 .fieldSetMapper(new LawdFiledSetMapper()) // 파일에 있는 필드를 각각 entity에 맵핑해주는 작업
@@ -67,6 +67,6 @@ public class LawdInsertJobConfig {
     @Bean
     @StepScope
     public ItemWriter<Lawd> lawdItemWriter() {
-        return items -> items.forEach(System.out::println);
+        return items -> items.forEach(lawdService::upsert);
     }
 }
