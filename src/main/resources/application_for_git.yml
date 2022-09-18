@@ -24,6 +24,10 @@ spring:
   batch:
     jdbc:
       initialize-schema: ALWAYS
+external:
+  apartment-api:
+    path:
+    service-key:
 
 ---
 spring:
