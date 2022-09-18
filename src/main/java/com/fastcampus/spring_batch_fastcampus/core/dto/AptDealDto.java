@@ -27,10 +27,10 @@ public class AptDealDto {
     private Integer year;
 
     @XmlElement(name = "법정동")
-    private Integer dong;
+    private String dong;
 
     @XmlElement(name = "아파트")
-    private Integer aptName;
+    private String aptName;
 
     @XmlElement(name = "월")
     private Integer month;
