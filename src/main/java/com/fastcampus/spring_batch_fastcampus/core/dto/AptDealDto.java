@@ -17,6 +17,9 @@ public class AptDealDto {
     @XmlElement(name = "거래금액")
     private String dealAmount;
 
+    @XmlElement(name = "거래유형")
+    private String dealType;
+
     @XmlElement(name = "건축년도")
     private Integer builtYear;
 
@@ -37,6 +40,9 @@ public class AptDealDto {
 
     @XmlElement(name = "전용면적")
     private Double exclusiveArea;
+
+    @XmlElement(name = "중개사소재지")
+    private Integer brokerLocation;
 
     @XmlElement(name = "지번")
     private Integer jibun;
